@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from './components/Header';
+import Movie from './components/Movie';
+import Search from './components/Search';
+import axios from 'axios';
 
 function App() {
+  const [movieData, setMovieData] = useState([]);
+
+  const searchKeyword = useSelector((state) => (state.keyword));
+
+  useEffect(() => {
+    const fetchMovie = async (search) => {
+      try {
+        const res = await axios.get('https://www.omdbapi.com', {
+          params : {
+            's':`${search}`,
+            'apikey':'c035a5ff'
+          }
+        });
+          setMovieData(res.data.Search);
+      } catch (error) {
+        console.error("Error fetching movie:", error);
+      }
+    }
+    fetchMovie(searchKeyword || 'Movie');
+  }, [searchKeyword]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Header />
+      <br />
+      <Search />
+      <Movie 
+        movieData = {movieData}
+      />
+    </>
+  )    
 }
 
 export default App;
