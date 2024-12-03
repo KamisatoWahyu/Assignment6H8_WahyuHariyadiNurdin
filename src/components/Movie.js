@@ -3,8 +3,6 @@ import { useSelector } from "react-redux";
 
 function Movie({ movieData }) {
   const searchKeyword = useSelector((state) => state.keyword);
-  console.log("Isi movie data: ", movieData);
-  console.log("Isi keyword: ", searchKeyword);
   return (
     <div class="container">
       {searchKeyword ? (
