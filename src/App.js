@@ -11,13 +11,14 @@ function App() {
 
   const searchKeyword = useSelector((state) => (state.keyword));
 
+  console.log(process.env.REACT_APP_API_KEY)
   useEffect(() => {
     const fetchMovie = async (search) => {
       try {
         const res = await axios.get('https://www.omdbapi.com', {
           params : {
             's':`${search}`,
-            'apikey':'c035a5ff'
+            'apikey':process.env.REACT_APP_API_KEY
           }
         });
           setMovieData(res.data.Search);
