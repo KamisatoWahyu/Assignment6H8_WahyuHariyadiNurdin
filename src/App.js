@@ -11,7 +11,6 @@ function App() {
 
   const searchKeyword = useSelector((state) => (state.keyword));
 
-  console.log(process.env.REACT_APP_API_KEY)
   useEffect(() => {
     const fetchMovie = async (search) => {
       try {
